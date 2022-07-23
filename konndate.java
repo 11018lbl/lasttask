@@ -1,5 +1,5 @@
 import java.util.*;
-import java.io.FileReader;
+import java.io.*;
 
 class kondate {
 //メインメソッド
@@ -12,22 +12,27 @@ class kondate {
     //System.out.println(ctl.history);
 
     //==================
-    String menue[];
+    String menue[] = null;
     String history[] = new String[14];
 
     FileReader fr = null;
     try{
       fr = new FileReader("menue.txt");
+      Scanner scn = new Scanner(fr);
+      int i = 0;
+      while(scn.hasNext()){
+        String s = scn.nextLine();
+        menue[i] = s;
+        i++;
+      }
+    }catch(IOException e){
+      System.out.println("inout error");
+    }catch(NumberFormatException e){
+      System.out.println("NumberFormatException");
     }catch(Exception e){
       System.out.println("error");
     }
-    Scanner scn = new Scanner(fr);
-    int i = 0;
-    while(scn.hasNext()){
-      String s = scn.nextLine();
-      menue[i] = s;
-      i++;
-    }
+
     //==================
 
     int end = 0;
