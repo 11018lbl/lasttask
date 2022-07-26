@@ -210,18 +210,23 @@ class Control{
     switch(x){
         case 1:
           for(i = 0; i<menue.length;i++){
-            if(menue[i].startsWith(name)){
-              checklist[l]=menue[i];
-              l++;
+            if(menue[i] != null){
+              if(menue[i].startsWith(name)){
+                checklist[l]=menue[i];
+                l++;
+                System.out.println(l);
+              }
             }
           }
           break;
 
         case 2:
           for(i = 0; i<menue.length;i++){
-            if(menue[i].endsWith(name)){
-              checklist[l]=menue[i];
-              l++;
+            if(menue[i] != null){
+              if(menue[i].endsWith(name)){
+                checklist[l]=menue[i];
+                l++;
+              }
             }
           }
           break;
@@ -229,8 +234,8 @@ class Control{
         case 3:
           double[] score = new double[menue.length];
           String[] key = name.split("");
-          for(i=0; i<key.length; i++){
-            for(l=0;l<key.length;l++){
+          for(i=0; i<key.length-1; i++){
+            for(l=i+1;l<key.length;l++){
               if(key[i]!=null && key[l]!=null){
                 if(key[i].equals(key[l])){
                   key[l]=null;
@@ -238,24 +243,37 @@ class Control{
               }
             }
           }
-          for(l=0;l<menue.length;l++){
+          System.out.println(key[0]);
+          System.out.println(key[3]);
+          String tester;
+          for(l=0; l<menue.length; l++){
             score[l]=0;
+            System.out.println(score[l]);
             for(i=0;i<key.length;i++){
               if(key[i]!=null){
-                //Pattern p = Patturn.compile("^.*"+key[i]+".*$");
-                if(menue[l].matches("^.*"+key[i]+".*$")){
+                System.out.println("a");
+                String tesp = "^.*"+key[i]+".*$";
+                //Pattern p = Pattern.compile(tesp);
+                Pattern pattern = Pattern.compile(tesp);
+                System.out.println("a1");
+                tester = menue[l];
+                System.out.println("a2");
+                Matcher m = pattern.matcher(tester);
+                System.out.println("a3");
+                if(m.find()){
+                  System.out.println("b");
                   score[l]=score[l]+1;
+                  System.out.println("b1");
                 }
-              }else{
-                break;
               }
             }
           }
-          double keylong = i;
+          System.out.println("c");
+          double keylong = (double)(i);
           l=0;
           for(i=0;i<menue.length;i++){
             score[i] = score[i] / keylong;
-            if(score[i] > 0.5){
+            if(score[i] > 0.3){
               checklist[l]=menue[i];
               l++;
             }
