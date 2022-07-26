@@ -4,6 +4,7 @@ import java.io.*;
 class kondate {
 //メインメソッド
   public static void main(String[] args){
+
     Control ctl = new Control();
     //ctl.menue = null;
     ctl.filecheck(ctl.menue);
@@ -120,8 +121,13 @@ class Control{
   void daymenue(){
     Scanner sc = new Scanner(System.in);
     System.out.println("今日の献立を入力してください");
-    String newmenue=sc.nextLine();
-    System.out.println("テスト"+newmenue);
+    //String nms = sc.next();
+    /*byte[] nm =  sc.next().getBytes( StandardCharsets.UTF_8 );
+    System.out.println(nm);*/
+    String newmenue = new String( sc.nextLine() , StandardCharsets.UFT_8 );
+
+    //String newmenue = sc.next();
+    System.out.println("テスト:"+newmenue);
     int delcheck = 0;
     int i;
     for(i = 14; i<menue.length; i++){
