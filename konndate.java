@@ -8,38 +8,9 @@ class kondate {
   public static void main(String[] args){
 
     Control ctl = new Control();
-    //ctl.menue = null;
     ctl.filecheck(ctl.menue);
 
-    //System.out.println(ctl.history[0]);
-
-    //==================
-    //String menue[];
-    //String history[] = new String[14];
-/*
-    FileReader fr = null;
-    try{
-      fr = new FileReader("menue.txt");
-    }catch(IOException e){
-      System.out.println("inout error");
-    }catch(NumberFormatException e){
-      System.out.println("NumberFormatException");
-    }catch(Exception e){
-      System.out.println("error");
-    }
-    Scanner scn = new Scanner(fr);
-    int i = 0;
-    while(scn.hasNext()){
-      String s = scn.nextLine();
-      System.out.println(s);
-      ctl.menue[i] = s;
-      i++;
-    }
-*/
-    //==================
-
     int end = 0;
-    //System.out.println("a");
     loop: for(end = 0; end == 0; ){
       System.out.println("\n1:献立候補一覧\n2:今日の献立入力\n3:献立履歴一覧\n4:新規メニュー追加\n5:登録名検索\n99:終了\n");
       Scanner scan = new Scanner(System.in);
@@ -47,19 +18,15 @@ class kondate {
         int num = scan.nextInt();
         switch(num){
           case 1:
-            System.out.println(num);
             ctl.fileall();
             break;
           case 2:
-            System.out.println(num);
             ctl.daymenue();
             break;
           case 3:
-            System.out.println(num);
             ctl.filehis();
             break;
           case 4:
-            System.out.println(num);
             ctl.nextmenue();
             break;
           case 5:
@@ -81,12 +48,7 @@ class kondate {
         }catch(InputMismatchException e){
           System.out.println("数値を入力してください");
         }
-
-        //System.out.println("b");
-
     }
-  //System.out.println("c");
-
   }//メインメソッド終了
 
 
@@ -98,7 +60,6 @@ class Control{
   String menue[] = new String[28];
   String history[] = new String[14];
   Pattern rim1 = Pattern.compile("^[0-9a-zA-Z\\-]+$");
-  //String rim1 = "^[0-9a-zA-Z\\-]+$";
 
   void filecheck(String[] x){
     FileReader fr = null;
@@ -122,7 +83,7 @@ class Control{
   }
 
   void fileall(){
-    System.out.println("========献立候補一覧========");
+    System.out.println("\n========献立候補一覧========");
     for(int i = menue.length; i>0;i--){
       if(menue[i-1] != null){
         System.out.println(menue[i-1]);
@@ -133,30 +94,22 @@ class Control{
 
   void daymenue(){
     Scanner sc = new Scanner(System.in);
-    //String nms = sc.next();
-    /*byte[] nm =  sc.next().getBytes( StandardCharsets.UTF-8 );
-    System.out.println(nm);
-    String newmenue = new String( nm, StandardCharsets.UFT-8 );
-    */
     int i;
     for(;;){
       System.out.println("今日の献立を入力してください");
       try{
       String newmenue = sc.next();
-      //String tester = newmenue;
       Matcher m = rim1.matcher(newmenue);
         if(m.find()){
 
           int delcheck = 0;
           for(i = 14; i<menue.length; i++){
             if(newmenue.equals(menue[i])){
-              System.out.println("same menue");
               menue[i]=null;
               delcheck=1;
             }
           }
           if(delcheck == 0){
-            System.out.println("no same");
             for(i = menue.length; i >1;i--){
               if(menue[i-2] != null){
                 menue[i-1]=menue[i-2];
@@ -179,13 +132,14 @@ class Control{
           change();
           break;
         }
-        System.out.println("エラー:使用できない文字が含まれています。");
+        System.out.println("\nエラー:使用できない文字が含まれています。");
+        System.out.println("====== ＊使用可能文字：半角英数,- ======\n");
       }catch(Exception e){}
     }
   }//daymenue end
 
   void filehis(){
-    System.out.println("========献立履歴一覧========");
+    System.out.println("\n========献立履歴一覧========");
     for(int i = 0; i<history.length; i++){
       if(history[i] != null){
         System.out.println(history[i]);
@@ -200,7 +154,6 @@ class Control{
     System.out.println("新しいメニューを入力してください");
     try{
     String nxmenue = scanner.nextLine();
-    //String tester = newmenue;
     Matcher m = rim1.matcher(nxmenue);
     if(m.find()){
 
@@ -218,7 +171,8 @@ class Control{
 
     break;
     }
-    System.out.println("エラー:使用できない文字が含まれています。");
+    System.out.println("\nエラー:使用できない文字が含まれています。");
+    System.out.println("====== ＊使用可能文字：半角英数,- ======\n");
     }catch(Exception e){}
     }
 
@@ -229,9 +183,7 @@ class Control{
     for(;;){
     System.out.println("検索する名前を入力してください");
     try{
-    //String newmenue = sc.next();
     String name = sc.nextLine();
-    //String tester = newmenue;
     Matcher ma = rim1.matcher(name);
       if(ma.find()){
 
@@ -313,7 +265,8 @@ class Control{
 
     break;
     }
-    System.out.println("エラー:使用できない文字が含まれています。");
+    System.out.println("\nエラー:使用できない文字が含まれています。");
+    System.out.println("====== ＊使用可能文字：半角英数,- ======\n");
     }catch(Exception e){}
 
     }
