@@ -243,37 +243,28 @@ class Control{
               }
             }
           }
-          System.out.println(key[0]);
-          System.out.println(key[3]);
           String tester;
           for(l=0; l<menue.length; l++){
             score[l]=0;
-            System.out.println(score[l]);
             for(i=0;i<key.length;i++){
-              if(key[i]!=null){
-                System.out.println("a");
+              if(key[i]!=null && menue[l] != null){
                 String tesp = "^.*"+key[i]+".*$";
                 //Pattern p = Pattern.compile(tesp);
                 Pattern pattern = Pattern.compile(tesp);
-                System.out.println("a1");
+                System.out.println(tesp);
                 tester = menue[l];
-                System.out.println("a2");
                 Matcher m = pattern.matcher(tester);
-                System.out.println("a3");
                 if(m.find()){
-                  System.out.println("b");
                   score[l]=score[l]+1;
-                  System.out.println("b1");
                 }
               }
             }
           }
-          System.out.println("c");
           double keylong = (double)(i);
           l=0;
           for(i=0;i<menue.length;i++){
             score[i] = score[i] / keylong;
-            if(score[i] > 0.3){
+            if(score[i] > 0.5){
               checklist[l]=menue[i];
               l++;
             }
