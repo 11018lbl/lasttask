@@ -69,6 +69,7 @@ class kondate {
               if((num==1) || (num==2) || (num==3)) {ctl.namecheck(num);
               }else{System.out.println("不正な数字です。");}
             }catch(Exception e){System.out.println("error1");}
+            break;
           case 99:
             end = 1;
             System.out.println("終了します。");
@@ -96,6 +97,8 @@ class Control{
 
   String menue[] = new String[28];
   String history[] = new String[14];
+  Pattern rim1 = Pattern.compile("^[0-9a-zA-Z\\-]+$");
+  //String rim1 = "^[0-9a-zA-Z\\-]+$";
 
   void filecheck(String[] x){
     FileReader fr = null;
@@ -130,46 +133,55 @@ class Control{
 
   void daymenue(){
     Scanner sc = new Scanner(System.in);
-    System.out.println("今日の献立を入力してください");
     //String nms = sc.next();
     /*byte[] nm =  sc.next().getBytes( StandardCharsets.UTF-8 );
     System.out.println(nm);
     String newmenue = new String( nm, StandardCharsets.UFT-8 );
     */
-    String newmenue = sc.next();
-
-    System.out.println("テスト:"+newmenue);
-    int delcheck = 0;
     int i;
-    for(i = 14; i<menue.length; i++){
-      if(newmenue.equals(menue[i])){
-        System.out.println("same menue");
-        menue[i]=null;
-        delcheck=1;
-      }
-    }
-    if(delcheck == 0){
-      System.out.println("no same");
-      for(i = menue.length; i >1;i--){
-        if(menue[i-2] != null){
-          menue[i-1]=menue[i-2];
-        }
-      }
-      menue[0]=newmenue;
-    }else{
-      for(i=0; i < menue.length; i++){
-        if(menue[i] == null){
+    for(;;){
+      System.out.println("今日の献立を入力してください");
+      try{
+      String newmenue = sc.next();
+      //String tester = newmenue;
+      Matcher m = rim1.matcher(newmenue);
+        if(m.find()){
+
+          int delcheck = 0;
+          for(i = 14; i<menue.length; i++){
+            if(newmenue.equals(menue[i])){
+              System.out.println("same menue");
+              menue[i]=null;
+              delcheck=1;
+            }
+          }
+          if(delcheck == 0){
+            System.out.println("no same");
+            for(i = menue.length; i >1;i--){
+              if(menue[i-2] != null){
+                menue[i-1]=menue[i-2];
+              }
+            }
+            menue[0]=newmenue;
+          }else{
+            for(i=0; i < menue.length; i++){
+              if(menue[i] == null){
+                break;
+              }
+            }
+            for(; i > 1; i-- ){
+              if(menue[i-2] != null){
+                menue[i-1]=menue[i-2];
+              }
+            }
+            menue[0]=newmenue;
+          }
+          change();
           break;
         }
-      }
-      for(; i > 1; i-- ){
-        if(menue[i-2] != null){
-          menue[i-1]=menue[i-2];
-        }
-      }
-      menue[0]=newmenue;
+        System.out.println("エラー:使用できない文字が含まれています。");
+      }catch(Exception e){}
     }
-    change();
   }//daymenue end
 
   void filehis(){
@@ -184,8 +196,14 @@ class Control{
 
   void nextmenue(){
     Scanner scanner = new Scanner(System.in);
+    for(;;){
     System.out.println("新しいメニューを入力してください");
+    try{
     String nxmenue = scanner.nextLine();
+    //String tester = newmenue;
+    Matcher m = rim1.matcher(nxmenue);
+    if(m.find()){
+
     int i;
     for(i = 0; i < menue.length ; i++){
       if(menue[i]==null){
@@ -198,12 +216,25 @@ class Control{
     }
     change();
 
+    break;
+    }
+    System.out.println("エラー:使用できない文字が含まれています。");
+    }catch(Exception e){}
+    }
+
   }//nextmenue end
 
   void namecheck(int x){
-    System.out.println("検索する名前を入力してください");
     Scanner sc = new Scanner(System.in);
+    for(;;){
+    System.out.println("検索する名前を入力してください");
+    try{
+    //String newmenue = sc.next();
     String name = sc.nextLine();
+    //String tester = newmenue;
+    Matcher ma = rim1.matcher(name);
+      if(ma.find()){
+
     String[] checklist = new String[28];
     int i;
     int l = 0;
@@ -249,9 +280,7 @@ class Control{
             for(i=0;i<key.length;i++){
               if(key[i]!=null && menue[l] != null){
                 String tesp = "^.*"+key[i]+".*$";
-                //Pattern p = Pattern.compile(tesp);
                 Pattern pattern = Pattern.compile(tesp);
-                System.out.println(tesp);
                 tester = menue[l];
                 Matcher m = pattern.matcher(tester);
                 if(m.find()){
@@ -281,6 +310,13 @@ class Control{
       }else{break;}
     }
     System.out.println("========================");
+
+    break;
+    }
+    System.out.println("エラー:使用できない文字が含まれています。");
+    }catch(Exception e){}
+
+    }
   }//namecheck end
 
   void change(){
