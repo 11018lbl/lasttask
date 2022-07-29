@@ -2,6 +2,7 @@ import java.util.*;
 import java.io.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.text.Normalizer;
 
 class kondate {
 //メインメソッド
@@ -15,7 +16,21 @@ class kondate {
       System.out.println("\n1:献立候補一覧\n2:今日の献立入力\n3:献立履歴一覧\n4:新規メニュー追加\n5:登録名検索\n99:終了\n");
       Scanner scan = new Scanner(System.in);
       try{
-        int num = scan.nextInt();
+        int num;
+
+        String scanstr = scan.next();
+        //System.out.println(scanstr);
+        Pattern pscn1 = Pattern.compile("^[0-9０-９]+$");
+        //Pattern pscn2 = Pattern.compile("[０-９]");
+        Matcher mstr = pscn1.matcher(scanstr);
+        if(mstr.find()){
+          String strnum = Normalizer.normalize(scanstr,Normalizer.Form.NFKC);
+          System.out.println(strnum);
+          num = Integer.parseInt(strnum);
+        }else{num = 0;}
+
+
+        //int num = scan.nextInt();
         switch(num){
           case 1:
             ctl.fileall();
